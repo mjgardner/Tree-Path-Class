@@ -1,11 +1,11 @@
-package Tree::Path::Class;
-
 use utf8;
-use strict;
 use Modern::Perl;
-use English '-no_match_vars';
+
+package Tree::Path::Class;
+use strict;
 
 # VERSION
+use English '-no_match_vars';
 
 1;
 
