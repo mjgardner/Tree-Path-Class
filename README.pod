@@ -27,6 +27,14 @@ L<Path::Class::Dir|Path::Class::Dir> or L<Path::Class::File|Path::Class::File>
 values, and provides several methods for retrieving the full path of a tree
 branch or leaf.
 
+=head1 ATTRIBUTES
+
+=head2 path
+
+A read-only accessor that returns the tree's full
+L<Path::Class::Dir|Path::Class::Dir> or L<Path::Class::File|Path::Class::File>
+object, with all parents prepended.
+
 =head1 METHODS
 
 =head2 FOREIGNBUILDARGS
@@ -35,6 +43,11 @@ At construction time any value passed to C<new()> will attempt to be coerced
 to a L<Path::Class::Dir|Path::Class::Dir> or
 L<Path::Class::File|Path::Class::File> if it isn't one already.  Failure will
 result in a thrown exception.
+
+=head2 BUILD
+
+After construction the object registers an event handler to update the C<path>
+attribute every time C<value> is set.
 
 =head1 SUPPORT
 

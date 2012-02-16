@@ -6,6 +6,7 @@ use strict;
 
 # VERSION
 use Const::Fast;
+use English '-no_match_vars';
 use Path::Class;
 use Try::Tiny;
 use Moose;
@@ -30,6 +31,30 @@ sub FOREIGNBUILDARGS {
         };
     };
     return $value;
+}
+
+sub BUILD { shift->add_event_handler( value => \&_set_value ); return }
+has path => (
+    ':ro',
+    isa    => Dir | File,    ## no critic (Bangs::ProhibitBitwiseOperators)
+    writer => '_set_path',
+);
+
+sub _set_value {
+    my $self = shift;
+    my @path = $self->_tree_to_path;
+    $self->_set_path( $self->is_dir ? dir(@path) : file(@path) );
+    return;
+}
+
+sub _tree_to_path {
+    my $self   = shift;
+    my @path   = ( FOREIGNBUILDARGS( $self->value ) );
+    my $parent = $self->parent;
+    if ( !$parent->isa('Tree::Null') ) {
+        unshift @path, $parent->_tree_to_path;
+    }
+    return @path;
 }
 
 __PACKAGE__->meta->make_immutable();
@@ -58,3 +83,14 @@ At construction time any value passed to C<new()> will attempt to be coerced
 to a L<Path::Class::Dir|Path::Class::Dir> or
 L<Path::Class::File|Path::Class::File> if it isn't one already.  Failure will
 result in a thrown exception.
+
+=method BUILD
+
+After construction the object registers an event handler to update the C<path>
+attribute every time C<value> is set.
+
+=attr path
+
+A read-only accessor that returns the tree's full
+L<Path::Class::Dir|Path::Class::Dir> or L<Path::Class::File|Path::Class::File>
+object, with all parents prepended.
