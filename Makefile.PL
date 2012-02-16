@@ -37,6 +37,7 @@ my %WriteMakefileArgs = (
     "MooseX::NonMoose" => 0,
     "MooseX::Types::Path::Class" => 0,
     "Path::Class" => 0,
+    "Throwable::Error" => 0,
     "Tree" => 0,
     "Try::Tiny" => 0,
     "strict" => 0,
