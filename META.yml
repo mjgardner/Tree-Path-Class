@@ -3,6 +3,7 @@ abstract: 'Main module for Tree-Path-Class'
 author:
   - 'Mark Gardner <mjgardner@cpan.org>'
 build_requires:
+  Carp: 0
   English: 0
   File::Find: 0
   File::Temp: 0
@@ -21,7 +22,7 @@ meta-spec:
   version: 1.4
 name: Tree-Path-Class
 requires:
-  Carp: 0
+  Const::Fast: 0
   Modern::Perl: 0
   Moose: 0
   MooseX::Has::Options: 0

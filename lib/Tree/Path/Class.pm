@@ -8,7 +8,7 @@ package Tree::Path::Class;
 use strict;
 
 our $VERSION = '0.001';    # VERSION
-use Carp;
+use Const::Fast;
 use Path::Class;
 use Try::Tiny;
 use Moose;
@@ -18,12 +18,19 @@ use MooseX::Types::Path::Class qw(Dir File);
 use MooseX::MarkAsMethods autoclean => 1;
 extends 'Tree';
 
+const $ERROR => __PACKAGE__ . '::Error';
+Moose::Meta::Class->create(
+    $ERROR => ( superclasses => ['Throwable::Error'] ) );
+
 sub FOREIGNBUILDARGS {
     my $value = shift // return;
     return $value if Dir->check($value) or File->check($value);
     try { $value = Dir->assert_coerce($value) }
     catch {
-        try { $value = File->assert_coerce($value) } catch { croak $_ };
+        try { $value = File->assert_coerce($value) }
+        catch {
+            $ERROR->throw('value is not a file or dir');
+        };
     };
     return $value;
 }
