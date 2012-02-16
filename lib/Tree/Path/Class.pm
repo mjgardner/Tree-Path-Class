@@ -10,7 +10,6 @@ use strict;
 our $VERSION = '0.001';    # VERSION
 use Const::Fast;
 use Path::Class;
-use Try::Tiny;
 use Moose;
 use MooseX::Has::Options;
 use MooseX::NonMoose;

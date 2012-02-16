@@ -39,7 +39,6 @@ my %WriteMakefileArgs = (
     "Path::Class" => 0,
     "Throwable::Error" => 0,
     "Tree" => 0,
-    "Try::Tiny" => 0,
     "strict" => 0,
     "utf8" => 0
   },
