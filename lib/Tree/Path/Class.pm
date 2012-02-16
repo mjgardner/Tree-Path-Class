@@ -18,7 +18,7 @@ use MooseX::Types::Path::Class qw(Dir File);
 use MooseX::MarkAsMethods autoclean => 1;
 extends 'Tree';
 
-const $ERROR => __PACKAGE__ . '::Error';
+const my $ERROR => __PACKAGE__ . '::Error';
 Moose::Meta::Class->create(
     $ERROR => ( superclasses => ['Throwable::Error'] ) );
 
