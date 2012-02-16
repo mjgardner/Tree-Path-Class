@@ -1,0 +1,41 @@
+name = Tree-Path-Class
+author = Mark Gardner <mjgardner@cpan.org>
+license = Perl_5
+copyright_holder = Mark Gardner
+
+[@Filter]
+-bundle = @Basic
+-remove = Readme
+[AutoPrereqs]
+[Prereqs]
+perl = 5.010
+[NextRelease]
+[PkgDist]
+[OurPkgVersion]
+[PodWeaver]
+[MetaConfig]
+[@TestingMania]
+enable = CheckChangesTests,ConsistentVersionTest
+[PerlTidy]
+; must occur after [PodWeaver] for [CriticTests] to pass
+; must occur after [@TestingMania] for [CompileTests] to run
+perltidyrc = xt/author/perltidy.rc
+[ReadmeAnyFromPod]
+[ReadmeAnyFromPod / ReadmePodInRoot]
+type = pod
+filename = README.pod
+location = root
+[ReportVersions]
+[InstallGuide]
+[MetaJSON]
+[@Git]
+allow_dirty = README.pod
+[Git::CommitBuild]
+[Git::NextVersion]
+[@GitHub]
+metacpan = 1
+[LocalBrew]
+brews = pristine-perl-5.10.1
+brews = pristine-perl-5.12.4
+brews = pristine-perl-5.14.1
+[InstallRelease]
