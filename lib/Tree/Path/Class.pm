@@ -36,7 +36,7 @@ __PACKAGE__->meta->make_immutable();
 no Moose;
 1;
 
-# ABSTRACT: Main module for Tree-Path-Class
+# ABSTRACT: Tree for Path::Class objects
 
 =head1 SYNOPSIS
 

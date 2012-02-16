@@ -7,7 +7,7 @@ kwalitee diff irc mailto metadata placeholders metacpan
 
 =head1 NAME
 
-Tree::Path::Class - Main module for Tree-Path-Class
+Tree::Path::Class - Tree for Path::Class objects
 
 =head1 VERSION
 
