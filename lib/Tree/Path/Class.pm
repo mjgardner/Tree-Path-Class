@@ -33,8 +33,11 @@ sub FOREIGNBUILDARGS {
     return $value;
 }
 
-sub BUILD { shift->add_event_handler( value => \&_set_value ); return }
-sub _set_value { $ARG[0]->_set_path( $ARG[0]->_build__path ); return }
+sub BUILD {
+    shift->add_event_handler(
+        value => sub { $ARG[0]->_set_path( $ARG[0]->_build__path ) } );
+    return;
+}
 
 has path => (
     qw(:ro :lazy_build),
