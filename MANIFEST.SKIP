@@ -1,4 +1,3 @@
-
 #!start included /home/gardnerm/perl5/perlbrew/perls/perl-5.14.2-usethreads/lib/site_perl/5.14.2/ExtUtils/MANIFEST.SKIP
 # Avoid version control files.
 \bRCS\b
@@ -56,4 +55,3 @@
 # Avoid MYMETA files
 ^MYMETA\.
 #!end included /home/gardnerm/perl5/perlbrew/perls/perl-5.14.2-usethreads/lib/site_perl/5.14.2/ExtUtils/MANIFEST.SKIP
-
