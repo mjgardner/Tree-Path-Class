@@ -34,17 +34,18 @@ sub FOREIGNBUILDARGS {
 }
 
 sub BUILD { shift->add_event_handler( value => \&_set_value ); return }
+sub _set_value { $ARG[0]->_set_path( $ARG[0]->_build__path ); return }
+
 has path => (
-    ':ro',
+    qw(:ro :lazy_build),
     isa    => Dir | File,    ## no critic (Bangs::ProhibitBitwiseOperators)
     writer => '_set_path',
 );
 
-sub _set_value {
+sub _build__path {
     my $self = shift;
     my @path = $self->_tree_to_path;
-    $self->_set_path( $self->is_dir ? dir(@path) : file(@path) );
-    return;
+    return $self->is_dir ? dir(@path) : file(@path);
 }
 
 sub _tree_to_path {
