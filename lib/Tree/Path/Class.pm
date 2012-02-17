@@ -28,14 +28,15 @@ with 'MooseX::OneArgNew' => {
 
 sub BUILD {
     my $self = shift;
-    $self->_tree->add_event_handler(
-        { value => sub { $self->_set_path( $self->_build__path ) }, },
+    $self->add_event_handler(
+        { value => sub { $self->_set_path( $self->_build_path ) } },
     );
     return;
 }
 
 has value => ( qw(:rw :coerce), isa => 'MaybePath', trigger => \&_set_value );
 sub _set_value { $ARG[0]->_tree->set_value( $ARG[1] ); return }
+sub set_value { return shift->value(@ARG) }
 
 has path => (
     qw(:ro :lazy_build),
@@ -49,8 +50,18 @@ sub _build_path {
     return $self->value->is_dir ? dir(@path) : file(@path);
 }
 
-has _tree =>
-    ( qw(:ro :required), isa => 'Tree', default => sub { Tree->new() } );
+has _tree => (
+    qw(:ro :required),
+    isa     => 'Tree',
+    default => sub { Tree->new() },
+    handles => [
+        qw(add_child remove_child mirror traverse
+            is_root is_leaf has_child get_index_for
+            parent children root height width depth size
+            error_handler error last_error
+            add_event_handler event),
+    ],
+);
 
 sub _tree_to_path {
     my $self   = shift;
