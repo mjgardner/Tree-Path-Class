@@ -22,12 +22,18 @@ version 0.001
 
 =head1 DESCRIPTION
 
-This module subclasses L<Tree|Tree> to only accept
+This module wraps L<Tree|Tree> to only accept
 L<Path::Class::Dir|Path::Class::Dir> or L<Path::Class::File|Path::Class::File>
-values, and provides several methods for retrieving the full path of a tree
+values, and provides a C<path> attribute for retrieving the full path of a tree
 branch or leaf.
 
 =head1 ATTRIBUTES
+
+=head2 value
+
+Accessor for either a L<Path::Class::Dir|Path::Class::Dir> or
+L<Path::Class::File|Path::Class::File> object containing the individual
+directory or file name on this node of the tree.
 
 =head2 path
 
@@ -37,12 +43,11 @@ object, with all parents prepended.
 
 =head1 METHODS
 
-=head2 FOREIGNBUILDARGS
+=head2 new
 
-At construction time any value passed to C<new()> will attempt to be coerced
-to a L<Path::Class::Dir|Path::Class::Dir> or
-L<Path::Class::File|Path::Class::File> if it isn't one already.  Failure will
-result in a thrown exception.
+Takes an optional string, array reference or
+L<Path::Class::Dir|Path::Class::Dir>/L<Path::Class::File|Path::Class::File>
+with which to populate the C<value> of the tree node.
 
 =head2 BUILD
 

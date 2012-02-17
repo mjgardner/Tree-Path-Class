@@ -8,60 +8,63 @@ use strict;
 use Const::Fast;
 use English '-no_match_vars';
 use Path::Class;
+use Tree;
 use Try::Tiny;
 use Moose;
+use Moose::Util::TypeConstraints;
 use MooseX::Has::Options;
-use MooseX::NonMoose;
-use MooseX::Types::Path::Class qw(Dir File);
+use MooseX::Types::Moose qw(ArrayRef Maybe Str);
+use MooseX::Types::Path::Class qw(Dir File to_Dir);
 use MooseX::MarkAsMethods autoclean => 1;
-extends 'Tree';
 
-const my $ERROR => __PACKAGE__ . '::Error';
-Moose::Meta::Class->create(
-    $ERROR => ( superclasses => ['Throwable::Error'] ) );
-
-sub FOREIGNBUILDARGS {
-    my $value = shift // return;
-    return $value if Dir->check($value) or File->check($value);
-    try { $value = Dir->assert_coerce($value) }
-    catch {
-        try { $value = File->assert_coerce($value) }
-        catch {
-            $ERROR->throw('value is not a file or dir');
-        };
-    };
-    return $value;
-}
+subtype 'MaybePath',    ## no critic (ProhibitCallsToUndeclaredSubs)
+    as Maybe [ Dir | File ];    ## no critic (ProhibitBitwiseOperators)
+coerce 'MaybePath', from ArrayRef, via { to_Dir($ARG) };
+coerce 'MaybePath', from Str,      via { to_Dir($ARG) };
+with 'MooseX::OneArgNew' => {
+    type     => 'MaybePath',
+    init_arg => 'value',
+};
 
 sub BUILD {
-    shift->add_event_handler(
-        value => sub { $ARG[0]->_set_path( $ARG[0]->_build__path ) } );
+    my $self = shift;
+    $self->_tree->add_event_handler(
+        { value => sub { $self->_set_path( $self->_build__path ) }, },
+    );
     return;
 }
 
+has value => ( qw(:rw :coerce), isa => 'MaybePath', trigger => \&_set_value );
+sub _set_value { $ARG[0]->_tree->set_value( $ARG[1] ); return }
+
 has path => (
     qw(:ro :lazy_build),
-    isa    => Dir | File,    ## no critic (Bangs::ProhibitBitwiseOperators)
+    isa    => 'MaybePath',
     writer => '_set_path',
 );
 
-sub _build__path {
+sub _build_path {
     my $self = shift;
     my @path = $self->_tree_to_path;
-    return $self->is_dir ? dir(@path) : file(@path);
+    return $self->value->is_dir ? dir(@path) : file(@path);
 }
+
+has _tree =>
+    ( qw(:ro :required), isa => 'Tree', default => sub { Tree->new() } );
 
 sub _tree_to_path {
     my $self   = shift;
-    my @path   = ( FOREIGNBUILDARGS( $self->value ) );
-    my $parent = $self->parent;
+    my $tree   = shift // $self->_tree;
+    my @path   = ( $tree->value );
+    my $parent = $tree->parent;
     if ( !$parent->isa('Tree::Null') ) {
-        unshift @path, $parent->_tree_to_path;
+        unshift @path, $self->_tree_to_path($parent);
     }
     return @path;
 }
 
 __PACKAGE__->meta->make_immutable();
+no Moose::Util::TypeConstraints;
 no Moose;
 1;
 
@@ -76,22 +79,27 @@ no Moose;
 
 =head1 DESCRIPTION
 
-This module subclasses L<Tree|Tree> to only accept
+This module wraps L<Tree|Tree> to only accept
 L<Path::Class::Dir|Path::Class::Dir> or L<Path::Class::File|Path::Class::File>
-values, and provides several methods for retrieving the full path of a tree
+values, and provides a C<path> attribute for retrieving the full path of a tree
 branch or leaf.
 
-=method FOREIGNBUILDARGS
+=method new
 
-At construction time any value passed to C<new()> will attempt to be coerced
-to a L<Path::Class::Dir|Path::Class::Dir> or
-L<Path::Class::File|Path::Class::File> if it isn't one already.  Failure will
-result in a thrown exception.
+Takes an optional string, array reference or
+L<Path::Class::Dir|Path::Class::Dir>/L<Path::Class::File|Path::Class::File>
+with which to populate the C<value> of the tree node.
 
 =method BUILD
 
 After construction the object registers an event handler to update the C<path>
 attribute every time C<value> is set.
+
+=attr value
+
+Accessor for either a L<Path::Class::Dir|Path::Class::Dir> or
+L<Path::Class::File|Path::Class::File> object containing the individual
+directory or file name on this node of the tree.
 
 =attr path
 
