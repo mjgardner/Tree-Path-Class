@@ -29,7 +29,8 @@ with 'MooseX::OneArgNew' => {
 sub BUILD {
     my $self = shift;
     $self->add_event_handler(
-        { value => sub { $self->_set_path( $self->_build_path ) } },
+        {   value => sub { $self->_set_path( $self->_build_path ) }
+        },
     );
     return;
 }
@@ -38,11 +39,8 @@ has value => ( qw(:rw :coerce), isa => 'MaybePath', trigger => \&_set_value );
 sub _set_value { $ARG[0]->_tree->set_value( $ARG[1] ); return }
 sub set_value { return shift->value(@ARG) }
 
-has path => (
-    qw(:ro :lazy_build),
-    isa    => 'MaybePath',
-    writer => '_set_path',
-);
+has path =>
+    ( qw(:ro :lazy_build), isa => 'MaybePath', writer => '_set_path' );
 
 sub _build_path {
     my $self = shift;
