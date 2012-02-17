@@ -20,5 +20,10 @@ my $child = new_ok(
 );
 
 lives_ok( sub { $tree->add_child($child) }, 'add child' );
+is_deeply(
+    [ $child->path->dir_list ],
+    [qw(another_dir child_dir)],
+    'path with child',
+);
 
 done_testing();

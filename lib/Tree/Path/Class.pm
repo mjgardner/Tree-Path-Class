@@ -62,6 +62,12 @@ has _tree => (
     ],
 );
 
+around [qw(add_child remove_child has_child get_index_for)] => sub {
+    my ( $orig, $self ) = splice @ARG, 0, 2;
+    return $self->$orig( map { ref $ARG eq __PACKAGE__ ? $self->_tree : $ARG }
+            @ARG );
+};
+
 sub _tree_to_path {
     my $self   = shift;
     my $tree   = shift // $self->_tree;
