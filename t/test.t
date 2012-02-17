@@ -19,4 +19,6 @@ my $child = new_ok(
     'string constructor',
 );
 
+lives_ok( sub { $tree->add_child($child) }, 'add child' );
+
 done_testing();
