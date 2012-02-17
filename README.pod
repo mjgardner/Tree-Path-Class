@@ -54,6 +54,20 @@ with which to populate the C<value> of the tree node.
 After construction the object registers an event handler to update the C<path>
 attribute every time C<value> is set.
 
+=head2 set_value
+
+Alternate setter for C<value>, for compatibility with L<Tree|Tree>.
+
+=head1 TYPES
+
+=head2 MaybePath
+
+A type that accepts either an L<undef|undef>,
+L<Path::Class::Dir|Path::Class::Dir>
+or L<Path::Class::File|Path::Class::File>.  Like the latter two it will coerce
+from an array reference or string into a
+L<Path::Class::Dir|Path::Class::Dir>.
+
 =head1 SUPPORT
 
 =head2 Perldoc

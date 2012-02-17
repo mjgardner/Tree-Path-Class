@@ -21,16 +21,17 @@ subtype 'MaybePath',    ## no critic (ProhibitCallsToUndeclaredSubs)
     as Maybe [ Dir | File ];    ## no critic (ProhibitBitwiseOperators)
 coerce 'MaybePath', from ArrayRef, via { to_Dir($ARG) };
 coerce 'MaybePath', from Str,      via { to_Dir($ARG) };
+
 with 'MooseX::OneArgNew' => {
-    type     => 'MaybePath',
+    ## no critic (ProhibitBitwiseOperators)
+    type => Maybe [ Str | Dir | File ],
     init_arg => 'value',
 };
 
 sub BUILD {
     my $self = shift;
     $self->add_event_handler(
-        {   value => sub { $self->_set_path( $self->_build_path ) }
-        },
+        { value => sub { $self->_set_path( $self->_build_path ) }, },
     );
     return;
 }
@@ -110,8 +111,20 @@ Accessor for either a L<Path::Class::Dir|Path::Class::Dir> or
 L<Path::Class::File|Path::Class::File> object containing the individual
 directory or file name on this node of the tree.
 
+=method set_value
+
+Alternate setter for C<value>, for compatibility with L<Tree|Tree>.
+
 =attr path
 
 A read-only accessor that returns the tree's full
 L<Path::Class::Dir|Path::Class::Dir> or L<Path::Class::File|Path::Class::File>
 object, with all parents prepended.
+
+=type MaybePath
+
+A type that accepts either an L<undef|undef>,
+L<Path::Class::Dir|Path::Class::Dir>
+or L<Path::Class::File|Path::Class::File>.  Like the latter two it will coerce
+from an array reference or string into a
+L<Path::Class::Dir|Path::Class::Dir>.

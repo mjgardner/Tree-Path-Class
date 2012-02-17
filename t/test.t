@@ -14,4 +14,9 @@ is( $tree->path->stringify, 'test_dir', 'root path string' );
 $tree->value( dir('another_dir') );
 is( $tree->path->stringify, 'another_dir', 'root path changes with value' );
 
+my $child = new_ok(
+    'Tree::Path::Class' => ['child_dir'],
+    'string constructor',
+);
+
 done_testing();
