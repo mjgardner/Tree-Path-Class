@@ -39,23 +39,20 @@ has path => (
 
 around set_value => sub {
     my ( $orig, $self ) = splice @ARG, 0, 2;
-    my $new_path = _value_to_path(@ARG);
-    $self->$orig($new_path);
+    $self->$orig( _value_to_path(@ARG) );
     $self->_set_path( $self->_tree_to_path );
     return $self;
 };
 
 after add_child => sub {
-    my $self = shift;
-    for my $child ( $self->children ) {
+    for my $child ( shift->children ) {
         $child->_set_path( $child->_tree_to_path );
     }
-    return;
 };
 
 sub _tree_to_path {
     my $self   = shift;
-    my @path   = ( $self->value );
+    my @path   = $self->value;
     my $parent = $self->parent;
     if ( !$parent->isa('Tree::Null') ) {
         unshift @path, $parent->_tree_to_path;
