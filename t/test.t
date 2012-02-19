@@ -11,7 +11,7 @@ isa_ok( $tree->value, 'Path::Class::Dir', 'root value' );
 isa_ok( $tree->path,  'Path::Class::Dir', 'root path' );
 is( $tree->path->stringify, 'test_dir', 'root path string' );
 
-$tree->value( dir('another_dir') );
+$tree->set_value( dir('another_dir') );
 is( $tree->path->stringify, 'another_dir', 'root path changes with value' );
 
 my $child = new_ok(
