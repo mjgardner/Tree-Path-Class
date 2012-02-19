@@ -40,6 +40,16 @@ around set_value => sub {
     return $self;
 };
 
+before add_child => sub {
+    my $self = shift;
+    if ( ref $ARG[0] eq 'HASH' and not blessed $ARG[0] ) {shift}
+    for (@ARG) {
+        if ( blessed $ARG ne __PACKAGE__ ) {
+            $ERROR->throw( 'can only add ' . __PACKAGE__ . ' children' );
+        }
+    }
+};
+
 after add_child => sub {
     for my $child ( shift->children ) {
         $child->_set_path( $child->_tree_to_path );
