@@ -32,8 +32,9 @@ sub FOREIGNBUILDARGS { return _value_to_path( @ARG[ 1 .. $#ARG ] ) }
 has path => (
     qw(:ro :lazy),
     isa => maybe_type( union( [ Dir, File ] ) ),
-    writer  => '_set_path',
-    default => sub { $ARG[0]->_tree_to_path },
+    init_arg => undef,
+    writer   => '_set_path',
+    default  => sub { $ARG[0]->_tree_to_path },
 );
 
 around set_value => sub {
