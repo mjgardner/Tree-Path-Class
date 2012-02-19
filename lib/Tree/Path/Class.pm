@@ -18,15 +18,6 @@ extends 'Tree';
 # defang Moose's hashref params
 around BUILDARGS => sub { &{ $ARG[0] }( $ARG[1] ) };
 
-sub _value_to_path {
-    return if !@ARG;
-    my @args = @ARG;
-    for my $arg (@args) {
-        if ( not( is_Dir($arg) or is_File($arg) ) ) { $arg = to_Dir($arg) }
-    }
-    return is_File( $args[-1] ) ? to_File( \@args ) : to_Dir( \@args );
-}
-
 sub FOREIGNBUILDARGS { return _value_to_path( @ARG[ 1 .. $#ARG ] ) }
 
 has path => (
@@ -58,6 +49,15 @@ sub _tree_to_path {
         unshift @path, $parent->_tree_to_path;
     }
     return _value_to_path(@path);
+}
+
+sub _value_to_path {
+    return if !@ARG;
+    my @args = @ARG;
+    for my $arg (@args) {
+        if ( not( is_Dir($arg) or is_File($arg) ) ) { $arg = to_Dir($arg) }
+    }
+    return is_File( $args[-1] ) ? to_File( \@args ) : to_Dir( \@args );
 }
 
 __PACKAGE__->meta->make_immutable();
