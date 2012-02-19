@@ -26,4 +26,15 @@ is_deeply(
     'path with child',
 );
 
+my $child_file = new_ok(
+    'Tree::Path::Class' => [ file('foo.txt') ],
+    'new with file',
+);
+lives_ok( sub { $tree->add_child($child_file) }, 'add child file' );
+isa_ok( $child_file->value, 'Path::Class::File', 'child file' );
+is_deeply(
+    [ $child_file->path->dir->dir_list, $child_file->value->stringify ],
+    [qw(another_dir foo.txt)], 'path with child file',
+);
+
 done_testing();
