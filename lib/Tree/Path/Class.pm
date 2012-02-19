@@ -5,10 +5,8 @@ package Tree::Path::Class;
 use strict;
 
 # VERSION
-use Const::Fast;
 use English '-no_match_vars';
 use Path::Class;
-use Try::Tiny;
 use Moose;
 use Moose::Util::TypeConstraints;
 use MooseX::Has::Options;
