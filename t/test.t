@@ -1,7 +1,7 @@
 #!perl
 
 use Modern::Perl;
-use Test::Most;
+use Test::Most tests => 15;
 
 use Path::Class;
 use Tree::Path::Class;
@@ -18,7 +18,6 @@ my $child = new_ok(
     'Tree::Path::Class' => ['child_dir'],
     'string constructor',
 );
-
 lives_ok( sub { $tree->add_child($child) }, 'add child' );
 is_deeply(
     [ $child->path->dir_list ],
@@ -37,4 +36,6 @@ is_deeply(
     [qw(another_dir foo.txt)], 'path with child file',
 );
 
-done_testing();
+my $empty_tree = new_ok( 'Tree::Path::Class' => [], 'new empty tree' );
+is( $empty_tree->value, undef, 'undef root value' );
+is( $empty_tree->path,  undef, 'undef root path' );
