@@ -5,6 +5,7 @@ package Tree::Path::Class;
 use strict;
 
 # VERSION
+use Const::Fast;
 use English '-no_match_vars';
 use Path::Class;
 use Moose;
@@ -14,6 +15,10 @@ use MooseX::NonMoose;
 use MooseX::Types::Path::Class qw(Dir is_Dir to_Dir File is_File to_File);
 use MooseX::MarkAsMethods autoclean => 1;
 extends 'Tree';
+
+const my $ERROR => __PACKAGE__ . '::Error';
+Moose::Meta::Class->create(
+    $ERROR => ( superclasses => ['Throwable::Error'] ) );
 
 # defang Moose's hashref params
 around BUILDARGS => sub { &{ $ARG[0] }( $ARG[1] ) };
@@ -54,8 +59,10 @@ sub _tree_to_path {
 sub _value_to_path {
     return if !@ARG;
     my @args = @ARG;
-    for my $arg (@args) {
-        if ( not( is_Dir($arg) or is_File($arg) ) ) { $arg = to_Dir($arg) }
+    for my $arg ( grep {$ARG} @args ) {
+        if ( not( is_Dir($arg) or is_File($arg) ) ) {
+            $arg = to_Dir($arg) or $ERROR->throw(q{couldn't coerce to a dir});
+        }
     }
     return is_File( $args[-1] ) ? to_File( \@args ) : to_Dir( \@args );
 }
