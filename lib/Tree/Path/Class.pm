@@ -76,7 +76,12 @@ no Moose;
     use Tree::Path::Class;
     use Path::Class;
 
-    my $tree = Tree::Path::Class( file('/path/to/file') );
+    my $tree  = Tree::Path::Class->new( dir('/parent/dir') );
+    my $child = Tree::Path::Class->new( file('child/file') );
+    $tree->add_child($child);
+
+    print $child->path->stringify;
+    # /parent/dir/child/file
 
 =head1 DESCRIPTION
 
