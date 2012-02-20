@@ -23,6 +23,7 @@ Moose::Meta::Class->create(
 # defang Moose's hashref params
 around BUILDARGS => sub { &{ $ARG[0] }( $ARG[1] ) };
 
+# coerce constructor arguments to Dir or File
 sub FOREIGNBUILDARGS { return _value_to_path( @ARG[ 1 .. $#ARG ] ) }
 
 has path => (
@@ -33,6 +34,7 @@ has path => (
     default  => sub { $ARG[0]->_tree_to_path },
 );
 
+# update path every time value changes
 around set_value => sub {
     my ( $orig, $self ) = splice @ARG, 0, 2;
     $self->$orig( _value_to_path(@ARG) );
@@ -63,6 +65,13 @@ around add_child => sub {
     return $self->$orig(@nodes);
 };
 
+after add_child => sub {
+    for my $child ( shift->children ) {
+        $child->_set_path( $child->_tree_to_path );
+    }
+};
+
+# recursively convert Tree and children into Tree::Path::Classes
 sub _tree_to_tpc {
     my $tree = shift;
     my $tpc  = __PACKAGE__->new( $tree->value );
@@ -71,12 +80,7 @@ sub _tree_to_tpc {
     return $tpc;
 }
 
-after add_child => sub {
-    for my $child ( shift->children ) {
-        $child->_set_path( $child->_tree_to_path );
-    }
-};
-
+# recursively derive path from current and parents' values
 sub _tree_to_path {
     my $self   = shift;
     my @path   = $self->value;
@@ -87,6 +91,7 @@ sub _tree_to_path {
     return _value_to_path(@path);
 }
 
+# coerce a value to a Dir or File if necessary
 sub _value_to_path {
     return if !@ARG;
     my @args = @ARG;
