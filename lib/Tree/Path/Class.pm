@@ -130,6 +130,12 @@ Coerces the parameter passed to C<new()> into a
 L<Path::Class::Dir|Path::Class::Dir> or L<Path::Class::File|Path::Class::File>
 before passing it on to the superclass constructor.
 
+=method add_child
+
+Works just like L<the superclass' method|Tree/add_child>.  Plain L<Tree|Tree>
+nodes will be recursively recreated as C<Tree::Path::Class>
+nodes when added.
+
 =attr path
 
 A read-only accessor that returns the tree's full
