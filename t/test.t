@@ -1,9 +1,10 @@
 #!perl
 
 use Modern::Perl;
-use Test::Most tests => 15;
+use Test::Most tests => 16;
 
 use Path::Class;
+use Tree;
 use Tree::Path::Class;
 
 my $tree = new_ok( 'Tree::Path::Class' => [ dir('test_dir') ], 'test root' );
@@ -39,3 +40,7 @@ is_deeply(
 my $empty_tree = new_ok( 'Tree::Path::Class' => [], 'new empty tree' );
 is( $empty_tree->value, undef, 'undef root value' );
 is( $empty_tree->path,  undef, 'undef root path' );
+
+my $plain_child = Tree->new();
+lives_ok( sub { $empty_tree->add_child($plain_child) },
+    'add plain Tree child' );
