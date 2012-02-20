@@ -1,6 +1,8 @@
 Revision history for Tree-Path-Class
 
 {{$NEXT}}
+
+0.002     2012-02-19 21:48:00 America/New_York
     Throw exception if a value can't be coerced
     Recursively convert Tree children
 0.001     2012-02-19 13:51:52 America/New_York
