@@ -14,7 +14,7 @@ throws_ok( sub { $tree = Tree::Path::Class->new( {} ) },
 $tree = new_ok('Tree::Path::Class');
 throws_ok( sub { $tree->set_value( {} ) }, $ERROR, 'bad type to set_value' );
 
-my $child = Tree->new();
+my $child = 'foo';
 throws_ok( sub { $tree->add_child($child) }, $ERROR,
     'bad type to add_child' );
 

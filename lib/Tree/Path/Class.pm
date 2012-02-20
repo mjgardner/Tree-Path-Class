@@ -40,15 +40,36 @@ around set_value => sub {
     return $self;
 };
 
-before add_child => sub {
-    my $self = shift;
-    if ( ref $ARG[0] eq 'HASH' and not blessed $ARG[0] ) {shift}
-    for (@ARG) {
-        if ( blessed $ARG ne __PACKAGE__ ) {
-            $ERROR->throw( 'can only add ' . __PACKAGE__ . ' children' );
+around add_child => sub {
+    my ( $orig, $self ) = splice @ARG, 0, 2;
+
+    my $options_ref;
+    if ( ref $ARG[0] eq 'HASH' and not blessed $ARG[0] ) {
+        $options_ref = shift;
+    }
+
+    my @nodes = @ARG;
+    for my $node (@nodes) {
+        given ( blessed $node) {
+            when (__PACKAGE__) {next}
+            when ('Tree') { $node = _tree_to_tpc($node) }
+            default {
+                $ERROR->throw(
+                    'can only add ' . __PACKAGE__ . ' or Tree children' );
+            }
         }
     }
+    if ($options_ref) { unshift @nodes, $options_ref }
+    return $self->$orig(@nodes);
 };
+
+sub _tree_to_tpc {
+    my $tree = shift;
+    my $tpc  = __PACKAGE__->new( $tree->value );
+    if ( $tree->meta ) { $tpc->meta( $tree->meta ) }
+    for ( $tree->children ) { $tpc->add_child($ARG) }
+    return $tpc;
+}
 
 after add_child => sub {
     for my $child ( shift->children ) {
