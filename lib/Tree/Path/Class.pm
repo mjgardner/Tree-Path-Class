@@ -52,15 +52,13 @@ around add_child => sub {
     }
 
     for my $node (@nodes) {
-        given ( blessed $node) {
-            when (__PACKAGE__) {next}
-            when ('Tree') { $node = _tree_to_tpc($node) }
-            default {
-                $ERROR->throw(
-                    'can only add ' . __PACKAGE__ . ' or Tree children' );
-            }
+        next if blessed $node eq __PACKAGE__;
+        if ( blessed $node ne 'Tree' ) {
+            $ERROR->throw( 'can only add ' . __PACKAGE__ . ' or Tree' );
         }
+        $node = _tree_to_tpc($node);
     }
+
     if ($options_ref) { unshift @nodes, $options_ref }
     return $self->$orig(@nodes);
 };
