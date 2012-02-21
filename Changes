@@ -1,7 +1,9 @@
 Revision history for Tree-Path-Class
 
 {{$NEXT}}
-
+    First official release
+    Note difference in metadata handling with Tree superclass
+    Improve readability of code
 0.002     2012-02-19 21:48:00 America/New_York
     Throw exception if a value can't be coerced
     Recursively convert Tree children
