@@ -76,7 +76,6 @@ after add_child => sub {
 sub _tree_to_tpc {
     my $tree = shift;
     my $tpc  = __PACKAGE__->new( $tree->value );
-    if ( $tree->meta ) { $tpc->meta( $tree->meta ) }
     for ( $tree->children ) { $tpc->add_child($ARG) }
     return $tpc;
 }
@@ -141,6 +140,11 @@ before passing it on to the superclass constructor.
 Works just like L<the superclass' method|Tree/add_child>.  Plain L<Tree|Tree>
 nodes will be recursively recreated as C<Tree::Path::Class>
 nodes when added.
+
+=method meta
+
+Unlike L<Tree|Tree>, this method provides access to the underlying
+L<Moose|Moose> meta-object rather than a hashref of arbitrary metadata.
 
 =attr path
 
