@@ -16,7 +16,7 @@ use MooseX::Types::Path::Class qw(Dir is_Dir to_Dir File is_File to_File);
 use MooseX::MarkAsMethods autoclean => 1;
 extends 'Tree';
 
-# make an error class for throwing exceptions
+# make our own error class for throwing exceptions
 const my $ERROR => __PACKAGE__ . '::Error';
 Moose::Meta::Class->create(
     $ERROR => ( superclasses => ['Throwable::Error'] ) );
@@ -44,14 +44,13 @@ around set_value => sub {
 };
 
 around add_child => sub {
-    my ( $orig, $self ) = splice @ARG, 0, 2;
+    my ( $orig, $self, @nodes ) = @ARG;
 
     my $options_ref;
-    if ( ref $ARG[0] eq 'HASH' and not blessed $ARG[0] ) {
-        $options_ref = shift;
+    if ( ref $nodes[0] eq 'HASH' and not blessed $nodes[0] ) {
+        $options_ref = shift @nodes;
     }
 
-    my @nodes = @ARG;
     for my $node (@nodes) {
         given ( blessed $node) {
             when (__PACKAGE__) {next}
