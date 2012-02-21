@@ -16,6 +16,7 @@ use MooseX::Types::Path::Class qw(Dir is_Dir to_Dir File is_File to_File);
 use MooseX::MarkAsMethods autoclean => 1;
 extends 'Tree';
 
+# make an error class for throwing exceptions
 const my $ERROR => __PACKAGE__ . '::Error';
 Moose::Meta::Class->create(
     $ERROR => ( superclasses => ['Throwable::Error'] ) );
