@@ -6,7 +6,6 @@ use strict;
 
 # VERSION
 use Const::Fast;
-use English '-no_match_vars';
 use Path::Class;
 use Moose;
 use MooseX::Has::Options;
@@ -16,29 +15,32 @@ use MooseX::MarkAsMethods autoclean => 1;
 extends 'Tree';
 
 # defang Moose's hashref params
-around BUILDARGS => sub { &{ $ARG[0] }( $ARG[1] ) };
+around BUILDARGS => sub { &{ $_[0] }( $_[1] ) };
 
 # coerce constructor arguments to Dir or File
-sub FOREIGNBUILDARGS { return _value_to_path( @ARG[ 1 .. $#ARG ] ) }
+sub FOREIGNBUILDARGS {
+    my @args = @_;
+    return _value_to_path( @args[ 1 .. $#args ] );
+}
 
 has path => (
     qw(:ro :lazy :coerce),
     isa      => TreePathValue,
     init_arg => undef,
     writer   => '_set_path',
-    default  => sub { $ARG[0]->_tree_to_path },
+    default  => sub { $_[0]->_tree_to_path },
 );
 
 # update path every time value changes
 around set_value => sub {
-    my ( $orig, $self ) = splice @ARG, 0, 2;
-    $self->$orig( _value_to_path(@ARG) );
+    my ( $orig, $self ) = splice @_, 0, 2;
+    $self->$orig( _value_to_path(@_) );
     $self->_set_path( $self->_tree_to_path );
     return $self;
 };
 
 around add_child => sub {
-    my ( $orig, $self, @nodes ) = @ARG;
+    my ( $orig, $self, @nodes ) = @_;
 
     my $options_ref;
     if ( ref $nodes[0] eq 'HASH' and not blessed $nodes[0] ) {
