@@ -13,6 +13,7 @@ use Moose::Util::TypeConstraints;
 use MooseX::Has::Options;
 use MooseX::NonMoose;
 use MooseX::Types::Path::Class qw(Dir is_Dir to_Dir File is_File to_File);
+use Tree::Path::Class::Types 'TreePath';
 use MooseX::MarkAsMethods autoclean => 1;
 extends 'Tree';
 
@@ -51,15 +52,8 @@ around add_child => sub {
         $options_ref = shift @nodes;
     }
 
-    for my $node (@nodes) {
-        given ( blessed $node) {
-            when (__PACKAGE__) {next}
-            when ('Tree') { $node = _tree_to_tpc($node) }
-            default {
-                $ERROR->throw(
-                    'can only add ' . __PACKAGE__ . ' or Tree children' );
-            }
-        }
+    for (@nodes) {
+        if ( !TreePath->check($_) ) { $_ = TreePath->assert_coerce($_) }
     }
 
     if ($options_ref) { unshift @nodes, $options_ref }
@@ -71,14 +65,6 @@ after add_child => sub {
         $child->_set_path( $child->_tree_to_path );
     }
 };
-
-# recursively convert Tree and children into Tree::Path::Classes
-sub _tree_to_tpc {
-    my $tree = shift;
-    my $tpc  = __PACKAGE__->new( $tree->value );
-    for ( $tree->children ) { $tpc->add_child($ARG) }
-    return $tpc;
-}
 
 # recursively derive path from current and parents' values
 sub _tree_to_path {
