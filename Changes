@@ -1,7 +1,8 @@
 Revision history for Tree-Path-Class
 
 {{$NEXT}}
-
+    Refactored types and coercions into a separate
+    Tree::Path::Class::Types library
 0.003     2012-02-21 12:27:31 America/New_York
     First official release
     Note difference in metadata handling with Tree superclass
