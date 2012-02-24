@@ -1,6 +1,8 @@
 Revision history for Tree-Path-Class
 
 {{$NEXT}}
+
+0.004     2012-02-24 13:33:11 America/New_York
     Refactored types and coercions into a separate
     Tree::Path::Class::Types library
 0.003     2012-02-21 12:27:31 America/New_York
