@@ -1,7 +1,7 @@
 Revision history for Tree-Path-Class
 
 {{$NEXT}}
-
+    Clean up dependencies, tests
 0.004     2012-02-24 13:33:11 America/New_York
     Refactored types and coercions into a separate
     Tree::Path::Class::Types library
