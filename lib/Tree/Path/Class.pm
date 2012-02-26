@@ -5,7 +5,6 @@ package Tree::Path::Class;
 use strict;
 
 # VERSION
-use Const::Fast;
 use Path::Class;
 use Moose;
 use MooseX::Has::Options;
