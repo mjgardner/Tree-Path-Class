@@ -6,11 +6,11 @@ use strict;
 
 # VERSION
 use Path::Class;
-use Moose;
+use Moose 2.1400;
 use MooseX::Has::Options;
 use MooseX::NonMoose;
 use Tree::Path::Class::Types qw(TreePath TreePathValue);
-use MooseX::MarkAsMethods autoclean => 1;
+use namespace::autoclean 0.16;
 extends 'Tree';
 
 # defang Moose's hashref params
