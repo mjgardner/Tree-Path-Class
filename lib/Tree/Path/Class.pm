@@ -42,7 +42,7 @@ around add_child => sub {
     my ( $orig, $self, @nodes ) = @_;
 
     my $options_ref;
-    if ( ref $nodes[0] eq 'HASH' and not blessed $nodes[0] ) {
+    if ( 'HASH' eq ref $nodes[0] and not blessed $nodes[0] ) {
         $options_ref = shift @nodes;
     }
 
