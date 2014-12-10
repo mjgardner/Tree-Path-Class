@@ -1,4 +1,5 @@
-#!start included /home/gardnerm/perl5/perlbrew/perls/perl-5.14.2-usethreads/lib/site_perl/5.14.2/ExtUtils/MANIFEST.SKIP
+
+#!start included /home/mjgardner/perl5/perlbrew/perls/perl-5.20.1-usethreads/lib/site_perl/5.20.1/ExtUtils/MANIFEST.SKIP
 # Avoid version control files.
 \bRCS\b
 \bCVS\b
@@ -32,6 +33,9 @@
 \bBUILD.COM$
 \bbuild.com$
 
+# and Module::Build::Tiny generated files
+\b_build_params$
+
 # Avoid temp and backup files.
 ~$
 \.old$
@@ -41,6 +45,7 @@
 \.tmp$
 \.#
 \.rej$
+\..*\.sw.?$
 
 # Avoid OS-specific files/dirs
 # Mac OSX metadata
@@ -52,6 +57,10 @@
 \bcover_db\b
 \bcovered\b
 
+# Avoid prove files
+\B\.prove$
+
 # Avoid MYMETA files
 ^MYMETA\.
-#!end included /home/gardnerm/perl5/perlbrew/perls/perl-5.14.2-usethreads/lib/site_perl/5.14.2/ExtUtils/MANIFEST.SKIP
+#!end included /home/mjgardner/perl5/perlbrew/perls/perl-5.20.1-usethreads/lib/site_perl/5.20.1/ExtUtils/MANIFEST.SKIP
+
