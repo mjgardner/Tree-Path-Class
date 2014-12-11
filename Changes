@@ -1,8 +1,10 @@
 Revision history for Tree-Path-Class
 
 {{$NEXT}}
-    #2: Remove MooseX::MarkAsMethods dependency in favor
-        of namespace::autoclean (ETHER++)
+    #1: Use Pod::Weaver::Plugin::SingleEncoding instead of
+        PWP::Encoding (SROMANOV++)
+    #2: Remove MooseX::MarkAsMethods dependency in favor of
+        namespace::autoclean (ETHER++)
 0.005     2012-02-26 16:05:23 America/New_York
     Clean up dependencies, tests
 0.004     2012-02-24 13:33:11 America/New_York
