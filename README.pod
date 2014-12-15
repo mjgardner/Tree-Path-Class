@@ -1,6 +1,6 @@
 =pod
 
-=encoding utf8
+=encoding UTF-8
 
 =for :stopwords Mark Gardner eBay Enterprise cpan testmatrix url annocpan anno bugtracker
 rt cpants kwalitee diff irc mailto metadata placeholders metacpan
@@ -11,7 +11,7 @@ Tree::Path::Class - Tree for Path::Class objects
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 
