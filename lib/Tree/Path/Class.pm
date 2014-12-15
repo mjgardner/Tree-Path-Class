@@ -7,7 +7,7 @@ package Tree::Path::Class;
 }
 use strict;
 
-our $VERSION = '0.006';    # VERSION
+our $VERSION = '0.007';    # VERSION
 use Path::Class;
 use Moose 2.1400;
 use MooseX::Has::Options;
@@ -92,7 +92,7 @@ __END__
 
 =pod
 
-=encoding utf8
+=encoding UTF-8
 
 =for :stopwords Mark Gardner eBay Enterprise cpan testmatrix url annocpan anno bugtracker
 rt cpants kwalitee diff irc mailto metadata placeholders metacpan
@@ -103,7 +103,7 @@ Tree::Path::Class - Tree for Path::Class objects
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

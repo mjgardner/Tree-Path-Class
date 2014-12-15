@@ -7,7 +7,7 @@ package Tree::Path::Class::Types;
 }
 use strict;
 
-our $VERSION = '0.006';    # VERSION
+our $VERSION = '0.007';    # VERSION
 use Carp;
 use Path::Class;
 use MooseX::Types -declare => [qw(TreePath TreePathValue Tree)];
@@ -52,7 +52,7 @@ __END__
 
 =pod
 
-=encoding utf8
+=encoding UTF-8
 
 =for :stopwords Mark Gardner eBay Enterprise cpan testmatrix url annocpan anno bugtracker
 rt cpants kwalitee diff irc mailto metadata placeholders metacpan
@@ -63,7 +63,7 @@ Tree::Path::Class::Types - Type library for Tree::Path::Class
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

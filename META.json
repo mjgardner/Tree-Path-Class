@@ -77,7 +77,7 @@
          "web" : "https://github.com/mjgardner/Tree-Path-Class"
       }
    },
-   "version" : "0.006",
+   "version" : "0.007",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.020001"
@@ -361,82 +361,6 @@
             "version" : "5.027"
          },
          {
-            "class" : "Dist::Zilla::Plugin::MetaTests",
-            "name" : "@TestingMania/MetaTests",
-            "version" : "5.027"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::Version",
-            "name" : "@TestingMania/Test::Version",
-            "version" : "0.003001"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::CPAN::Changes",
-            "name" : "@TestingMania/Test::CPAN::Changes",
-            "version" : "0.008"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::PodSyntaxTests",
-            "name" : "@TestingMania/PodSyntaxTests",
-            "version" : "5.027"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::UnusedVars",
-            "name" : "@TestingMania/Test::UnusedVars",
-            "version" : "2.000006"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::PodCoverageTests",
-            "name" : "@TestingMania/PodCoverageTests",
-            "version" : "5.027"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::Portability",
-            "name" : "@TestingMania/Test::Portability",
-            "version" : "2.000005"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::Kwalitee",
-            "config" : {
-               "Dist::Zilla::Plugin::Test::Kwalitee" : {
-                  "filename" : "xt/release/kwalitee.t",
-                  "skiptest" : []
-               }
-            },
-            "name" : "@TestingMania/Test::Kwalitee",
-            "version" : "2.11"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::DistManifest",
-            "name" : "@TestingMania/Test::DistManifest",
-            "version" : "2.000004"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::EOL",
-            "config" : {
-               "Dist::Zilla::Plugin::Test::EOL" : {
-                  "filename" : "xt/author/eol.t"
-               }
-            },
-            "name" : "@TestingMania/Test::EOL",
-            "version" : "0.16"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::NoTabs",
-            "config" : {
-               "Dist::Zilla::Plugin::Test::NoTabs" : {
-                  "filename" : "xt/author/no-tabs.t",
-                  "finder" : [
-                     ":InstallModules",
-                     ":ExecFiles",
-                     ":TestFiles"
-                  ]
-               }
-            },
-            "name" : "@TestingMania/Test::NoTabs",
-            "version" : "0.09"
-         },
-         {
             "class" : "Dist::Zilla::Plugin::Test::Compile",
             "config" : {
                "Dist::Zilla::Plugin::Test::Compile" : {
@@ -459,19 +383,20 @@
             "version" : "2.051"
          },
          {
-            "class" : "Dist::Zilla::Plugin::Test::MinimumVersion",
-            "name" : "@TestingMania/Test::MinimumVersion",
-            "version" : "2.000005"
+            "class" : "Dist::Zilla::Plugin::Test::Kwalitee",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::Kwalitee" : {
+                  "filename" : "xt/release/kwalitee.t",
+                  "skiptest" : []
+               }
+            },
+            "name" : "@TestingMania/Test::Kwalitee",
+            "version" : "2.11"
          },
          {
-            "class" : "Dist::Zilla::Plugin::Test::Perl::Critic",
-            "name" : "@TestingMania/Test::Perl::Critic",
-            "version" : "2.112410"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::Synopsis",
-            "name" : "@TestingMania/Test::Synopsis",
-            "version" : "2.000005"
+            "class" : "Dist::Zilla::Plugin::Test::DistManifest",
+            "name" : "@TestingMania/Test::DistManifest",
+            "version" : "2.000004"
          },
          {
             "class" : "Dist::Zilla::Plugin::Test::CPAN::Meta::JSON",
@@ -479,14 +404,89 @@
             "version" : "0.003"
          },
          {
+            "class" : "Dist::Zilla::Plugin::PodCoverageTests",
+            "name" : "@TestingMania/PodCoverageTests",
+            "version" : "5.027"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::MinimumVersion",
+            "name" : "@TestingMania/Test::MinimumVersion",
+            "version" : "2.000005"
+         },
+         {
             "class" : "Dist::Zilla::Plugin::Test::Pod::LinkCheck",
             "name" : "@TestingMania/Test::Pod::LinkCheck",
             "version" : "1.001"
          },
          {
+            "class" : "Dist::Zilla::Plugin::Test::Synopsis",
+            "name" : "@TestingMania/Test::Synopsis",
+            "version" : "2.000005"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::NoTabs",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::NoTabs" : {
+                  "filename" : "xt/author/no-tabs.t",
+                  "finder" : [
+                     ":InstallModules",
+                     ":ExecFiles",
+                     ":TestFiles"
+                  ]
+               }
+            },
+            "name" : "@TestingMania/Test::NoTabs",
+            "version" : "0.09"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::Version",
+            "name" : "@TestingMania/Test::Version",
+            "version" : "0.003001"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::UnusedVars",
+            "name" : "@TestingMania/Test::UnusedVars",
+            "version" : "2.000006"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::CPAN::Changes",
+            "name" : "@TestingMania/Test::CPAN::Changes",
+            "version" : "0.008"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::Portability",
+            "name" : "@TestingMania/Test::Portability",
+            "version" : "2.000005"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::MetaTests",
+            "name" : "@TestingMania/MetaTests",
+            "version" : "5.027"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::Perl::Critic",
+            "name" : "@TestingMania/Test::Perl::Critic",
+            "version" : "2.112410"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::PodSyntaxTests",
+            "name" : "@TestingMania/PodSyntaxTests",
+            "version" : "5.027"
+         },
+         {
             "class" : "Dist::Zilla::Plugin::MojibakeTests",
             "name" : "@TestingMania/MojibakeTests",
             "version" : "0.7"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Test::EOL",
+            "config" : {
+               "Dist::Zilla::Plugin::Test::EOL" : {
+                  "filename" : "xt/author/eol.t"
+               }
+            },
+            "name" : "@TestingMania/Test::EOL",
+            "version" : "0.16"
          },
          {
             "class" : "Dist::Zilla::Plugin::PerlTidy",
@@ -566,7 +566,7 @@
                "Dist::Zilla::Plugin::Git::Tag" : {
                   "branch" : null,
                   "signed" : 0,
-                  "tag" : "v0.006",
+                  "tag" : "v0.007",
                   "tag_format" : "v%v",
                   "tag_message" : "v%v",
                   "time_zone" : "local"

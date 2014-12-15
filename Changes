@@ -1,5 +1,7 @@
 Revision history for Tree-Path-Class
 
+0.007     2014-12-15 03:06:25+00:00 UTC
+    #1: Use UTF-8 POD encoding (SROMANOV++)
 0.006     2014-12-11 22:02:14+00:00 UTC
     #1: Use Pod::Weaver::Plugin::SingleEncoding instead of
         PWP::Encoding (SROMANOV++)
